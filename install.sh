@@ -89,11 +89,11 @@ confirm() {
 }
 
 #Root check
-[[ $EUID -ne 0 ]] && LOGE "Please use the root user to run the script" && exit 1
+[[ $EUID -ne 0 ]] && LOGE "请使用root用户运行该脚本" && exit 1
 
 #System check
 os_check() {
-    LOGI "Check the current system..."
+    LOGI "检测当前系统中..."
     if [[ -f /etc/redhat-release ]]; then
         OS_RELEASE="centos"
     elif cat /etc/issue | grep -Eqi "debian"; then
@@ -109,7 +109,7 @@ os_check() {
     elif cat /proc/version | grep -Eqi "centos|red hat|redhat"; then
         OS_RELEASE="centos"
     else
-        LOGE "System check error,Please contact the script author!" && exit 1
+        LOGE "系统检测错误,请联系脚本作者!" && exit 1
     fi
     LOGI "系统检测完毕,当前系统为:${OS_RELEASE}"
 }
