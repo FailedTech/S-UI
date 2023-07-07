@@ -516,7 +516,7 @@ stop_sing-box() {
 
 #enable sing-box will set sing-box auto start on system boot
 enable_sing-box() {
-    systemctl enable sing-box
+    systemctl enable ${SERVICE_FILE_PATH}
     if [[ $? == 0 ]]; then
         LOGI "Set the sing-box to start automatically after booting successfully"
     else
@@ -526,7 +526,7 @@ enable_sing-box() {
 
 #disable sing-box
 disable_sing-box() {
-    systemctl disable sing-box
+    systemctl disable ${SERVICE_FILE_PATH}
     if [[ $? == 0 ]]; then
         LOGI "Cancel the sing-box boot-up auto-start successfully"
     else
