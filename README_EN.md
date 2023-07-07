@@ -31,7 +31,7 @@ sing-box is a universal proxy platform which supports many protocols.Currently i
 For more details,please check here:point_right:[official site](https://sing-box.sagernet.org/)
 # usage
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/FranzKafkaYu/sing-box-yes/master/install.sh)
+bash <(curl -Ls https://raw.githubusercontent.com/FailedTech/S-UI/main/install.sh)
 ```
 # quick start
 Just type `sing-box` to enter control menu,as follows showed here:
