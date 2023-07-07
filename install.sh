@@ -45,7 +45,7 @@ BINARY_FILE_PATH='/usr/local/S-UI/bin'
 SCRIPT_FILE_PATH='/usr/local/S-UI/sbin'
 
 #service install path
-SERVICE_FILE_PATH='/usr/local/S-UI/Service/sing-box.service'
+SERVICE_FILE_PATH='/usr/local/S-UI/Service'
 
 #log file save path
 DEFAULT_LOG_FILE_SAVE_PATH='/usr/local/S-UI/sing-box.log'
