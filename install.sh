@@ -539,22 +539,22 @@ show_log() {
     if [[ $? == ${SING_BOX_STATUS_NOT_RUNNING} ]]; then
         journalctl -u sing-box.service -e --no-pager -f
     else
-        confirm "确认是否已在配置中开启日志记录,default开启" "y"
+        confirm "Confirm logging is enabled in the configuration, default is enabled" "y"
         if [[ $? -ne 0 ]]; then
-            LOGI "将从console中读取日志:"
+            LOGI "Read logs from console:"
             journalctl -u sing-box.service -e --no-pager -f
         else
             local tempLog=''
-            read -p "将从日志文件中读取日志,请输入日志文件路径,直接回车将使用default路径": tempLog
+            read -p "Read logs from log file. Please enter the log file path. Press Enter to use the default path: " tempLog
             if [[ -n ${tempLog} ]]; then
-                LOGI "日志文件路径:${tempLog}"
+                LOGI "Log file path: ${tempLog}"
                 if [[ -f ${tempLog} ]]; then
                     tail -f ${tempLog} -s 3
                 else
-                    LOGE "${tempLog}不存在,请确认配置"
+                    LOGE "${tempLog} does not exist. Please check the configuration."
                 fi
             else
-                LOGI "日志文件路径:${DEFAULT_LOG_FILE_SAVE_PATH}"
+                LOGI "Log file path: ${DEFAULT_LOG_FILE_SAVE_PATH}"
                 tail -f ${DEFAULT_LOG_FILE_SAVE_PATH} -s 3
             fi
         fi
@@ -567,37 +567,37 @@ clear_log() {
     if [[ $# -gt 0 ]]; then
         filePath=$1
     else
-        read -p "请输入日志文件路径": filePath
+        read -p "Please enter the log file path: " filePath
         if [[ ! -n ${filePath} ]]; then
-            LOGI "输入的日志文件路径无效,将使用default的文件路径"
+            LOGI "Invalid input for log file path. Using the default file path."
             filePath=${DEFAULT_LOG_FILE_SAVE_PATH}
         fi
     fi
-    LOGI "日志路径为:${filePath}"
+    LOGI "Log path: ${filePath}"
     if [[ ! -f ${filePath} ]]; then
-        LOGE "清除sing-box 日志文件失败,${filePath}不存在,请确认"
+        LOGE "Failed to clear sing-box log file. ${filePath} does not exist. Please check."
         exit 1
     fi
     fileSize=$(ls -la ${filePath} --block-size=M | awk '{print $5}' | awk -F 'M' '{print$1}')
     if [[ ${fileSize} -gt ${DEFAULT_LOG_FILE_DELETE_TRIGGER} ]]; then
         rm $1 && systemctl restart sing-box
         if [[ $? -ne 0 ]]; then
-            LOGE "清除sing-box 日志文件失败"
+            LOGE "Failed to clear sing-box log file."
         else
-            LOGI "清除sing-box 日志文件成功"
+            LOGI "Successfully cleared sing-box log file."
         fi
     else
-        LOGI "当前日志大小为${fileSize}M,小于${DEFAULT_LOG_FILE_DELETE_TRIGGER}M,将不会清除"
+        LOGI "Current log size is ${fileSize}M, less than ${DEFAULT_LOG_FILE_DELETE_TRIGGER}M, will not be cleared."
     fi
 }
 
 #enable auto delete log，need file path as
 enable_auto_clear_log() {
-    LOGI "设置sing-box 定时清除日志..."
+    LOGI "Setting up scheduled log clearing for sing-box..."
     local disabled=false
     disabled=$(cat ${CONFIG_FILE_PATH}/config.json | jq .log.disabled | tr -d '"')
     if [[ ${disabled} == "true" ]]; then
-        LOGE "当前系统未开启日志,将直接退出脚本"
+        LOGE "Logging is currently disabled in the system. Exiting the script."
         exit 0
     fi
     local filePath=''
@@ -607,23 +607,23 @@ enable_auto_clear_log() {
         filePath=$(cat ${CONFIG_FILE_PATH}/config.json | jq .log.output | tr -d '"')
     fi
     if [[ ! -f ${filePath} ]]; then
-        LOGE "${filePath}不存在,设置sing-box 定时清除日志失败"
+        LOGE "${filePath} does not exist. Failed to set up scheduled log clearing for sing-box."
         exit 1
     fi
     crontab -l >/tmp/crontabTask.tmp
     echo "0 0 * * 6 sing-box clear ${filePath}" >>/tmp/crontabTask.tmp
     crontab /tmp/crontabTask.tmp
     rm /tmp/crontabTask.tmp
-    LOGI "设置sing-box 定时清除日志${filePath}成功"
+    LOGI "Successfully set up scheduled log clearing for sing-box (${filePath})"
 }
 
 #disable auto dlete log
 disable_auto_clear_log() {
     crontab -l | grep -v "sing-box clear" | crontab -
     if [[ $? -ne 0 ]]; then
-        LOGI "取消sing-box 定时清除日志失败"
+        LOGI "Failed to disable scheduled log clearing for sing-box."
     else
-        LOGI "取消sing-box 定时清除日志成功"
+        LOGI "Successfully disabled scheduled log clearing for sing-box."
     fi
 }
 
@@ -641,50 +641,50 @@ ssl_cert_issue() {
 
 #show help
 show_help() {
-    echo "sing-box-v${SING_BOX_VERSION} 管理脚本使用方法: "
+    echo "Usage of sing-box-v${SING_BOX_VERSION} management script:"
     echo "------------------------------------------"
-    echo "sing-box              - 显示快捷菜单 (功能更多)"
-    echo "sing-box start        - 启动 sing-box服务"
-    echo "sing-box stop         - 停止 sing-box服务"
-    echo "sing-box restart      - 重启 sing-box服务"
-    echo "sing-box status       - 查看 sing-box 状态"
-    echo "sing-box enable       - 设置 sing-box 开机自启"
-    echo "sing-box disable      - 取消 sing-box 开机自启"
-    echo "sing-box log          - 查看 sing-box 日志"
-    echo "sing-box clear        - 清除 sing-box 日志"
-    echo "sing-box update       - 更新 sing-box 服务"
-    echo "sing-box install      - 安装 sing-box 服务"
-    echo "sing-box uninstall    - 卸载 sing-box 服务"
+    echo "sing-box              - Display the shortcut menu (more features)"
+    echo "sing-box start        - Start the sing-box service"
+    echo "sing-box stop         - Stop the sing-box service"
+    echo "sing-box restart      - Restart the sing-box service"
+    echo "sing-box status       - View the sing-box status"
+    echo "sing-box enable       - Set sing-box to start on boot"
+    echo "sing-box disable      - Disable sing-box from starting on boot"
+    echo "sing-box log          - View sing-box logs"
+    echo "sing-box clear        - Clear sing-box logs"
+    echo "sing-box update       - Update sing-box service"
+    echo "sing-box install      - Install sing-box service"
+    echo "sing-box uninstall    - Uninstall sing-box service"
     echo "------------------------------------------"
 }
 
 #show menu
 show_menu() {
     echo -e "
-  ${green}sing-box-v${SING_BOX_VERSION} 管理脚本${plain}
-  ${green}0.${plain} 退出脚本
+  ${green}sing-box-v${SING_BOX_VERSION} Management Script${plain}
+  ${green}0.${plain} Exit the script
 ————————————————
-  ${green}1.${plain} 安装 sing-box 服务
-  ${green}2.${plain} 更新 sing-box 服务
-  ${green}3.${plain} 卸载 sing-box 服务
-  ${green}4.${plain} 启动 sing-box 服务
-  ${green}5.${plain} 停止 sing-box 服务
-  ${green}6.${plain} 重启 sing-box 服务
-  ${green}7.${plain} 查看 sing-box 状态
-  ${green}8.${plain} 查看 sing-box 日志
-  ${green}9.${plain} 清除 sing-box 日志
-  ${green}A.${plain} 检查 sing-box 配置
+  ${green}1.${plain} Install sing-box service
+  ${green}2.${plain} Update sing-box service
+  ${green}3.${plain} Uninstall sing-box service
+  ${green}4.${plain} Start sing-box service
+  ${green}5.${plain} Stop sing-box service
+  ${green}6.${plain} Restart sing-box service
+  ${green}7.${plain} View sing-box status
+  ${green}8.${plain} View sing-box logs
+  ${green}9.${plain} Clear sing-box logs
+  ${green}A.${plain} Check sing-box configuration
 ————————————————
-  ${green}B.${plain} 设置 sing-box 开机自启
-  ${green}C.${plain} 取消 sing-box 开机自启
-  ${green}D.${plain} 设置 sing-box 定时清除日志&重启
-  ${green}E.${plain} 取消 sing-box 定时清除日志&重启
+  ${green}B.${plain} Set sing-box to start on boot
+  ${green}C.${plain} Disable sing-box from starting on boot
+  ${green}D.${plain} Set up scheduled log clearing and restart
+  ${green}E.${plain} Disable scheduled log clearing and restart
 ————————————————
-  ${green}F.${plain} 一键开启 bbr 
-  ${green}G.${plain} 一键申请SSL证书
+  ${green}F.${plain} Enable BBR (one-click)
+  ${green}G.${plain} Apply SSL certificate (one-click)
  "
     show_status
-    echo && read -p "请输入选择[0-G]:" num
+    echo && read -p "Please enter your choice [0-G]: " num
 
     case "${num}" in
     0)
@@ -739,7 +739,7 @@ show_menu() {
         ssl_cert_issue
         ;;
     *)
-        LOGE "请输入正确的选项 [0-G]"
+        LOGE "Please enter a valid option [0-G]"
         ;;
     esac
 }
