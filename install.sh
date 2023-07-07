@@ -45,7 +45,7 @@ BINARY_FILE_PATH='/usr/local/S-UI/bin'
 SCRIPT_FILE_PATH='/usr/local/S-UI/sbin'
 
 #service install path
-SERVICE_FILE_PATH='/usr/local/S-UI/Service'
+SERVICE_FILE_PATH='/usr/local/S-UI/Service/sing-box.service'
 
 #log file save path
 DEFAULT_LOG_FILE_SAVE_PATH='/usr/local/S-UI/sing-box.log'
@@ -429,7 +429,7 @@ install_systemd_service() {
         rm -rf ${SERVICE_FILE_PATH}
     fi
     #create service file
-    mkdir -p ${SERVICE_FILE_PATH} && touch ${SERVICE_FILE_PATH}/sing-box.service
+    mkdir -p "$(dirname "${SERVICE_FILE_PATH}")" && touch ${SERVICE_FILE_PATH}
     if [ $? -ne 0 ]; then
         LOGE "create service file failed,exit"
         exit 1
