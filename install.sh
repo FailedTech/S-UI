@@ -363,7 +363,7 @@ install_sing-box() {
     fi
 
     #install sing-box
-    install -m 755 sing-box ${BINARY_FILE_PATH}
+    mkdir -p ${BINARY_FILE_PATH} && install -m 755 sing-box ${BINARY_FILE_PATH}
 
     if [[ $? -ne 0 ]]; then
         LOGE "install sing-box failed,exit"
