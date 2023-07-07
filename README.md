@@ -1,11 +1,9 @@
 # sing-box-yes
-CN|[EN](./README_EN.md)  
+Install sing-box easily:100:  
 
-方便快捷的安装、管理sing-box:100:  
+sing-box is a universal proxy platform which supports many protocols.Currently it supports:  
 
-sing-box是一个新的通用代理平台,对标*ray core与clash,且具有许多新的[特性](https://sing-box.sagernet.org/features/),目前支持以下协议:  
-
-`入站`： 
+`inbound`： 
 - Shadowsocks(including shadowsocks2022)    
 - Vmess  
 - Trojan  
@@ -18,7 +16,7 @@ sing-box是一个新的通用代理平台,对标*ray core与clash,且具有许�
 - Socks  
 - HTTP  
 
-`出站`:  
+`outbound`:  
 - Shadowsocks(including shadowsocks2022)    
 - Vmess  
 - Trojan 
@@ -29,85 +27,70 @@ sing-box是一个新的通用代理平台,对标*ray core与clash,且具有许�
 - VLESS  
 - Tor  
 - SSH
-- DNS 
 
-针对sing-box的更多内容,请点击这里:point_right:[official site](https://sing-box.sagernet.org/)
-# 一键安装  
+For more details,please check here:point_right:[official site](https://sing-box.sagernet.org/)
+# usage
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/FranzKafkaYu/sing-box-yes/master/install.sh)
-```    
-执行后会自行显示管理菜单，通过菜单选项`1`将会自动安装最新release版本。与此同时，你也可以通过`sing-box install`来安装最新版本    
-
-如果你想安装某个特定版本(包括Pre-release),请使用以下命令,将`1.1-beta8`替换为特定版本号即可    
+bash <(curl -Ls https://raw.githubusercontent.com/FailedTech/S-UI/main/install.sh)
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/FranzKafkaYu/sing-box-yes/master/install.sh) install 1.1-beta8
-```  
-如果在安装后想更新到最新的release版本,且保留原有的配置文件,请使用如下命令或通过菜单选项`2`进行更新  
+# quick start
+Just type `sing-box` to enter control menu,as follows showed here:
 ```
-sing-box update 
-```
-如果在安装后想更新到某个特定版本(包括Pre-release),且保留原有的配置文件,请使用如下命令进行更新,将`1.1-beta8`替换为特定版本号即可
-```
-sing-box update 1.1-beta8
-```
-# 快捷方式
-在服务器command line内输入sing-box回车即可进入管理菜单,当前菜单内容如下所示：  
-
-```
-  sing-box-v0.0.1 管理脚本
-  0. 退出脚本
+S-UI Management Panel
+  0. Exit script
 ————————————————
-  1. 安装 sing-box 服务
-  2. 更新 sing-box 服务
-  3. 卸载 sing-box 服务
-  4. 启动 sing-box 服务
-  5. 停止 sing-box 服务
-  6. 重启 sing-box 服务
-  7. 查看 sing-box 状态
-  8. 查看 sing-box 日志
-  9. 清除 sing-box 日志
-  A. 检查 sing-box 配置
+  1. Install
+  2. Update
+  3. Uninstall
+  4. Start
+  5. Stop
+  6. Restart
+  7. View status
+  8. View logs
+  9. Check configuration
 ————————————————
-  B. 设置 sing-box 开机自启
-  C. 取消 sing-box 开机自启
-  D. 设置 sing-box 定时清除日志&重启
-  E. 取消 sing-box 定时清除日志&重启
+  A. Auto-start at boot
+  B. Disable auto-start at boot
 ————————————————
-  F. 一键开启 bbr 
-  G. 一键申请SSL证书
+  C. Install bbr 
+  D. Get SSL certificate
  
-[INF] 版本信息:sing-box 1.0.4.d2add33 (go1.19.1, linux/amd64, CGO disabled) 
-[INF] sing-box状态: 已运行
-[INF] sing-box是否开机自启: 是
+[INF] Version Information:sing-box 1.0.4.d2add33 (go1.19.1, linux/amd64, CGO disabled) 
+[INF] sing-box status: running
+[INF] sing-box starts automatically: Yes
 [INF] ##################### 
-[INF] 进程ID:303895 
-[INF] 运行时长：Sun 2022-09-18 14:52:42 CST; 1min 42s ago  
-[INF] 内存占用:14336 kB 
+[INF] Process ID:2615900 
+[INF] Run Time：Thu 2022-09-15 16:29:14 CST; 1s ago  
+[INF] Memory Usage: 11488 kB 
 [INF] ##################### 
-[INF] 配置文件路径:/usr/local/etc/sing-box/config.json 
-[INF] 可执行文件路径:/usr/local/bin/sing-box   
+[INF] Configuration file path:/usr/local/S-UI/Conf/config.json 
+[INF] Executable path:/usr/local/S-UI/bin/sing-box 
+```   
+# examples  
+- client_config.json will be used as client config,inbound:`tun`,outbound:`shadowsocks`  
+- server_config.json will be used as server config,inbound:`shadowcoks`,outbound:`direct`   
 
 ```   
-如果你厌倦了频繁输入数字,脚本也提供了一些快捷命令,具体如下：  
+If you are tired of entering numbers frequently, the script also provides some shortcut commands, as follows：  
 ```
-  sing-box              - 显示快捷菜单 (功能更多)  
-  sing-box start        - 启动 sing-box服务  
-  sing-box stop         - 停止 sing-box服务  
-  sing-box restart      - 重启 sing-box服务  
-  sing-box status       - 查看 sing-box 状态  
-  sing-box enable       - 设置 sing-box 开机自启  
-  sing-box disable      - 取消 sing-box 开机自启  
-  sing-box log          - 查看 sing-box 日志  
-  sing-box clear        - 清除 sing-box 日志  
-  sing-box update       - 更新 sing-box 服务  
-  sing-box install      - 安装 sing-box 服务  
-  sing-box uninstall    - 卸载 sing-box 服务  
+  sing-box              - Show shortcut menu (more functions)  
+  sing-box start 
+  sing-box stop
+  sing-box restart
+  sing-box status
+  sing-box enable
+  sing-box disable
+  sing-box log
+  sing-box clear
+  sing-box update
+  sing-box install
+  sing-box uninstall
 ```
 
-# 使用说明  
-安装完sing-box后,你可能需要遵循以下几步方能正常使用：  
+# Instructions for use  
+After installing sing-box, you may need to follow the following steps to use it normally：  
 
-1)配置服务端：脚本默认路径为`/usr/local/etc/sing-box/config.json`,请使用`nano`或者`vim`进行编辑,具体的内容可以参考下方的配置样例部分,请依据个人实际情况进行填写  
+1)Configure the server: the default path of the script is `/usr/local/S_UI/Conf/config.json`,please use`nano`or`vim` for editing, please refer to the configuration sample section below for specific content, please fill in according to your actual situation 
 2)配置检查：编辑保存好配置文件后，尽可能使用脚本提供的配置文件检查功能进行检查，该功能会对配置的格式进行检查确认，请确保检查通过  
 3)重启sing-box：配置检查通过后，可以使用脚本中的重启功能重启`sing-box`，观察`sing-box`是否正常工作,请确保其正常工作  
 4)下载客户端：请根据运行环境自行下载客户端，解压获得可执行文件  
