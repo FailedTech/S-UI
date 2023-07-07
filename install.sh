@@ -642,7 +642,7 @@ ssl_cert_issue() {
 
 #show help
 show_help() {
-    echo "Usage of sing-box-v${S_UI_VERSION} management script:"
+    echo "Usage of S-UI-v${S_UI_VERSION} management script:"
     echo "------------------------------------------"
     echo "sing-box              - Display the shortcut menu (more features)"
     echo "sing-box start        - Start the sing-box service"
@@ -662,7 +662,7 @@ show_help() {
 #show menu
 show_menu() {
     echo -e "
-  ${green}sing-box-v${S_UI_VERSION} Management Script${plain}
+  ${green}S-UI-v${S_UI_VERSION} Management Script${plain}
   ${green}0.${plain} Exit the script
 ————————————————
   ${green}1.${plain} Install sing-box service
