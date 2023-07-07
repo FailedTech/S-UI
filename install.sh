@@ -4,8 +4,8 @@
 #This shell script is used for sing-box installation
 #Usage：
 #
-#Author:FranzKafka
-#Date:2022-09-15
+#Author:FailedTech
+#Date:07/07/2023
 #Version:0.0.1
 #####################################################
 
@@ -27,28 +27,28 @@ OS_ARCH=''
 SING_BOX_VERSION=''
 
 #script version
-SING_BOX_YES_VERSION='0.0.2'
+SING_BOX_VERSION='0.0.2'
 
 #package download path
-DOWNLAOD_PATH='/usr/local/sing-box'
+DOWNLAOD_PATH='/usr/local/S-UI'
 
 #backup config path
-CONFIG_BACKUP_PATH='/usr/local/etc'
+CONFIG_BACKUP_PATH='/usr/local/S-UI/Conf_Backup'
 
 #config install path
-CONFIG_FILE_PATH='/usr/local/etc/sing-box'
+CONFIG_FILE_PATH='/usr/local/S-UI/Conf'
 
 #binary install path
-BINARY_FILE_PATH='/usr/local/bin/sing-box'
+BINARY_FILE_PATH='/usr/local/S-UI/bin/sing-box'
 
-#scritp install path
-SCRIPT_FILE_PATH='/usr/local/sbin/sing-box'
+#script install path
+SCRIPT_FILE_PATH='/usr/local/S-UI/sbin/sing-box'
 
 #service install path
-SERVICE_FILE_PATH='/etc/systemd/system/sing-box.service'
+SERVICE_FILE_PATH='/usr/local/S-UI/Service/sing-box.service'
 
 #log file save path
-DEFAULT_LOG_FILE_SAVE_PATH='/usr/local/sing-box/sing-box.log'
+DEFAULT_LOG_FILE_SAVE_PATH='/usr/local/S-UI/sing-box.log'
 
 #sing-box status define
 declare -r SING_BOX_STATUS_RUNNING=1
@@ -74,7 +74,7 @@ function LOGD() {
 
 confirm() {
     if [[ $# > 1 ]]; then
-        echo && read -p "$1 [默认$2]: " temp
+        echo && read -p "$1 [default$2]: " temp
         if [[ x"${temp}" == x"" ]]; then
             temp=$2
         fi
@@ -89,11 +89,11 @@ confirm() {
 }
 
 #Root check
-[[ $EUID -ne 0 ]] && LOGE "请使用root用户运行该脚本" && exit 1
+[[ $EUID -ne 0 ]] && LOGE "Please use the root user to run the script" && exit 1
 
 #System check
 os_check() {
-    LOGI "检测当前系统中..."
+    LOGI "Check the current system..."
     if [[ -f /etc/redhat-release ]]; then
         OS_RELEASE="centos"
     elif cat /etc/issue | grep -Eqi "debian"; then
@@ -109,16 +109,16 @@ os_check() {
     elif cat /proc/version | grep -Eqi "centos|red hat|redhat"; then
         OS_RELEASE="centos"
     else
-        LOGE "系统检测错误,请联系脚本作者!" && exit 1
+        LOGE "System detection error, please contact the script author!" && exit 1
     fi
-    LOGI "系统检测完毕,当前系统为:${OS_RELEASE}"
+    LOGI "System detection is completed, the current system is:${OS_RELEASE}"
 }
 
 #arch check
 arch_check() {
-    LOGI "检测当前系统架构中..."
+    LOGI "Detect the current system architecture..."
     OS_ARCH=$(arch)
-    LOGI "当前系统架构为 ${OS_ARCH}"
+    LOGI "The current system architecture is ${OS_ARCH}"
 
     if [[ ${OS_ARCH} == "x86_64" || ${OS_ARCH} == "x64" || ${OS_ARCH} == "amd64" ]]; then
         OS_ARCH="amd64"
@@ -126,9 +126,9 @@ arch_check() {
         OS_ARCH="arm64"
     else
         OS_ARCH="amd64"
-        LOGE "检测系统架构失败，使用默认架构: ${OS_ARCH}"
+        LOGE "Failed to detect system architecture, use default architecture: ${OS_ARCH}"
     fi
-    LOGI "系统架构检测完毕,当前系统架构为:${OS_ARCH}"
+    LOGI "System architecture detection is completed, the current system architecture is:${OS_ARCH}"
 }
 
 #sing-box status check,-1 means didn't install,0 means failed,1 means running
@@ -147,21 +147,21 @@ status_check() {
 #check config provided by sing-box core
 config_check() {
     if [[ ! -f "${CONFIG_FILE_PATH}/config.json" ]]; then
-        LOGE "${CONFIG_FILE_PATH}/config.json 不存在,配置检查失败"
+        LOGE "${CONFIG_FILE_PATH}/config.json does not exist, configuration check failed"
         return
     else
         info=$(${BINARY_FILE_PATH} check -c ${CONFIG_FILE_PATH}/config.json)
         if [[ $? -ne 0 ]]; then
-            LOGE "配置检查失败,请查看日志"
+            LOGE "Configuration check failed, please check the log"
         else
-            LOGI "恭喜:配置检查通过"
+            LOGI "Congratulations: configuration check passed"
         fi
     fi
 }
 
 set_as_entrance() {
     if [[ ! -f "${SCRIPT_FILE_PATH}" ]]; then
-        wget --no-check-certificate -O ${SCRIPT_FILE_PATH} https://raw.githubusercontent.com/FranzKafkaYu/sing-box-yes/main/install.sh
+        wget --no-check-certificate -O ${SCRIPT_FILE_PATH} https://raw.githubusercontent.com/FailedTech/S-UI/main/install.sh
         chmod +x ${SCRIPT_FILE_PATH}
     fi
 }
@@ -172,21 +172,21 @@ show_status() {
     case $? in
     0)
         show_sing_box_version
-        echo -e "[INF] sing-box状态: ${yellow}未运行${plain}"
+        echo -e "[INF] sing-box state: ${yellow}Not Running${plain}"
         show_enable_status
-        LOGI "配置文件路径:${CONFIG_FILE_PATH}/config.json"
-        LOGI "可执行文件路径:${BINARY_FILE_PATH}"
+        LOGI "Configuration file path:${CONFIG_FILE_PATH}/config.json"
+        LOGI "Executable path:${BINARY_FILE_PATH}"
         ;;
     1)
         show_sing_box_version
-        echo -e "[INF] sing-box状态: ${green}已运行${plain}"
+        echo -e "[INF] sing-box state: ${green}Running${plain}"
         show_enable_status
         show_running_status
-        LOGI "配置文件路径:${CONFIG_FILE_PATH}/config.json"
-        LOGI "可执行文件路径:${BINARY_FILE_PATH}"
+        LOGI "Configuration file path:${CONFIG_FILE_PATH}/config.json"
+        LOGI "Executable path:${BINARY_FILE_PATH}"
         ;;
     255)
-        echo -e "[INF] sing-box状态: ${red}未安装${plain}"
+        echo -e "[INF] sing-box state: ${red}Not Installed${plain}"
         ;;
     esac
 }
@@ -199,27 +199,27 @@ show_running_status() {
         local runTime=$(systemctl status sing-box | grep Active | awk '{for (i=5;i<=NF;i++)printf("%s ", $i);print ""}')
         local memCheck=$(cat /proc/${pid}/status | grep -i vmrss | awk '{print $2,$3}')
         LOGI "#####################"
-        LOGI "进程ID:${pid}"
-        LOGI "运行时长：${runTime}"
-        LOGI "内存占用:${memCheck}"
+        LOGI "Process ID: ${pid}"
+        LOGI "Run Time：${runTime}"
+        LOGI "Memory Usage: ${memCheck}"
         LOGI "#####################"
     else
-        LOGE "sing-box未运行"
+        LOGE "sing-box is not running"
     fi
 }
 
 #show sing-box version
 show_sing_box_version() {
-    LOGI "版本信息:$(${BINARY_FILE_PATH} version)"
+    LOGI "Version Information: $(${BINARY_FILE_PATH} version)"
 }
 
 #show sing-box enable status,enabled means sing-box can auto start when system boot on
 show_enable_status() {
     local temp=$(systemctl is-enabled sing-box)
     if [[ x"${temp}" == x"enabled" ]]; then
-        echo -e "[INF] sing-box是否开机自启: ${green}是${plain}"
+        echo -e "[INF] sing-box start automatically: ${green}Yes${plain}"
     else
-        echo -e "[INF] sing-box是否开机自启: ${red}否${plain}"
+        echo -e "[INF] sing-box start automatically: ${red}No${plain}"
     fi
 }
 
@@ -264,7 +264,7 @@ install_base() {
 
 #download sing-box  binary
 download_sing-box() {
-    LOGD "开始下载sing-box..."
+    LOGD "start download sing-box..."
     os_check && arch_check && install_base
     if [[ $# -gt 1 ]]; then
         echo -e "${red}invalid input,plz check your input: $* ${plain}"
@@ -276,7 +276,7 @@ download_sing-box() {
         local SING_BOX_VERSION_TEMP=$(curl -Ls "https://api.github.com/repos/SagerNet/sing-box/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
         SING_BOX_VERSION=${SING_BOX_VERSION_TEMP:1}
     fi
-    LOGI "将选择使用版本:${SING_BOX_VERSION}"
+    LOGI "Choose the version:${SING_BOX_VERSION}"
     local DOWANLOAD_URL="https://github.com/SagerNet/sing-box/releases/download/${SING_BOX_VERSION_TEMP}/sing-box-${SING_BOX_VERSION}-linux-${OS_ARCH}.tar.gz"
 
     #here we need create directory for sing-box
@@ -288,57 +288,57 @@ download_sing-box() {
         create_or_delete_path 0
         exit 1
     else
-        LOGI "下载sing-box成功"
+        LOGI "Download sing-box successfully"
     fi
 }
 
 #dwonload  config examples,this should be called when dowanload sing-box
 download_config() {
-    LOGD "开始下载sing-box配置模板..."
+    LOGD "Start downloading the sing-box configuration template..."
     if [[ ! -d ${CONFIG_FILE_PATH} ]]; then
         mkdir -p ${CONFIG_FILE_PATH}
     fi
     if [[ ! -f "${CONFIG_FILE_PATH}/config.json" ]]; then
-        wget --no-check-certificate -O ${CONFIG_FILE_PATH}/config.json https://raw.githubusercontent.com/FranzKafkaYu/sing-box-yes/main/shadowsocks2022/server_config.json
+        wget --no-check-certificate -O ${CONFIG_FILE_PATH}/config.json https://raw.githubusercontent.com/FailedTech/S-UI/main/Config/config.json
         if [[ $? -ne 0 ]]; then
-            LOGE "下载sing-box配置模板失败,请检查网络"
+            LOGE "Failed to download the sing-box configuration template, please check the network"
             exit 1
         else
-            LOGI "下载sing-box配置模板成功"
+            LOGI "Download the sing-box configuration template successfully"
         fi
     else
-        LOGI "${CONFIG_FILE_PATH} 已存在,无需重复下载"
+        LOGI "${CONFIG_FILE_PATH} already exists, no need to download again"
     fi
 }
 
 #backup config，this will be called when update sing-box
 backup_config() {
-    LOGD "开始备份sing-box配置文件..."
+    LOGD "Start backing up the sing-box configuration file..."
     if [[ ! -f "${CONFIG_FILE_PATH}/config.json" ]]; then
-        LOGE "当前无可备份配置文件"
+        LOGE "There are currently no configuration files to back up"
         return 0
     else
         mv ${CONFIG_FILE_PATH}/config.json ${CONFIG_BACKUP_PATH}/config.json.bak
     fi
-    LOGD "备份sing-box配置文件完成"
+    LOGD "Backup sing-box configuration file completed"
 }
 
 #backup config，this will be called when update sing-box
 restore_config() {
-    LOGD "开始还原sing-box配置文件..."
+    LOGD "Start restoring the sing-box configuration file..."
     if [[ ! -f "${CONFIG_BACKUP_PATH}/config.json.bak" ]]; then
-        LOGE "当前无可备份配置文件"
+        LOGE "There are currently no configuration files to back up"
         return 0
     else
         mv ${CONFIG_BACKUP_PATH}/config.json.bak ${CONFIG_FILE_PATH}/config.json
     fi
-    LOGD "还原sing-box配置文件完成"
+    LOGD "Restoring the sing-box configuration file is complete"
 }
 
 #install sing-box,in this function we will download binary,paremete $1 will be used as version if it's given
 install_sing-box() {
     set_as_entrance
-    LOGD "开始安装sing-box..."
+    LOGD "Start installing sing-box..."
     if [[ $# -ne 0 ]]; then
         download_sing-box $1
     else
@@ -356,10 +356,10 @@ install_sing-box() {
 
     if [[ $? -ne 0 ]]; then
         clear_sing_box
-        LOGE "解压sing-box安装包失败,脚本退出"
+        LOGE "Failed to decompress the sing-box installation package, the script exited"
         exit 1
     else
-        LOGI "解压sing-box安装包成功"
+        LOGI "Unzip the sing-box installation package successfully"
     fi
 
     #install sing-box
@@ -372,14 +372,14 @@ install_sing-box() {
         LOGI "install sing-box suceess"
     fi
     install_systemd_service && enable_sing-box && start_sing-box
-    LOGI "安装sing-box成功,已启动成功"
+    LOGI "The installation of sing-box is successful, and it has been started successfully"
 }
 
 #update sing-box
 update_sing-box() {
-    LOGD "开始更新sing-box..."
+    LOGD "Start updating sing-box..."
     if [[ ! -f "${SERVICE_FILE_PATH}" ]]; then
-        LOGE "当前系统未安装sing-box,请在安装sing-box的前提下使用更新命令"
+        LOGE "The current system has not installed sing-box, please use the update command on the premise of installing sing-box"
         show_menu
     fi
     #here we need back up config first,and then restore it after installation
@@ -400,14 +400,14 @@ update_sing-box() {
 }
 
 clear_sing_box() {
-    LOGD "开始清除sing-box..."
+    LOGD "Start clearing sing-box..."
     create_or_delete_path 0 && rm -rf ${SERVICE_FILE_PATH} && rm -rf ${BINARY_FILE_PATH} && rm -rf ${SCRIPT_FILE_PATH}
-    LOGD "清除sing-box完毕"
+    LOGD "Clear sing-box complete"
 }
 
 #uninstall sing-box
 uninstall_sing-box() {
-    LOGD "开始卸载sing-box..."
+    LOGD "Start uninstalling sing-box..."
     pidOfsing_box=$(pidof sing-box)
     if [ -n ${pidOfsing_box} ]; then
         stop_sing-box
@@ -415,16 +415,16 @@ uninstall_sing-box() {
     clear_sing_box
 
     if [ $? -ne 0 ]; then
-        LOGE "卸载sing-box失败,请检查日志"
+        LOGE "Failed to uninstall sing-box, please check the log"
         exit 1
     else
-        LOGI "卸载sing-box成功"
+        LOGI "Uninstall sing-box successfully"
     fi
 }
 
 #install systemd service
 install_systemd_service() {
-    LOGD "开始安装sing-box systemd服务..."
+    LOGD "Start installing the sing-box systemd service..."
     if [ -f "${SERVICE_FILE_PATH}" ]; then
         rm -rf ${SERVICE_FILE_PATH}
     fi
@@ -455,7 +455,7 @@ WantedBy=multi-user.target
 EOF
     chmod 644 ${SERVICE_FILE_PATH}
     systemctl daemon-reload
-    LOGD "安装sing-box systemd服务成功"
+    LOGD "Install sing-box systemd service successfully"
 }
 
 #start sing-box
@@ -496,7 +496,7 @@ restart_sing-box() {
 
 #stop sing-box
 stop_sing-box() {
-    LOGD "开始停止sing-box服务..."
+    LOGD "Stop the sing-box service..."
     status_check
     if [ $? == ${SING_BOX_STATUS_NOT_INSTALL} ]; then
         LOGE "sing-box did not install,can not stop it"
@@ -510,16 +510,16 @@ stop_sing-box() {
             exit 1
         fi
     fi
-    LOGD "停止sing-box服务成功"
+    LOGD "sing-box service Stopped successfully"
 }
 
 #enable sing-box will set sing-box auto start on system boot
 enable_sing-box() {
     systemctl enable sing-box
     if [[ $? == 0 ]]; then
-        LOGI "设置sing-box开机自启成功"
+        LOGI "Set the sing-box to start automatically after booting successfully"
     else
-        LOGE "设置sing-box开机自启失败"
+        LOGE "Failed to set the sing-box to boot automatically"
     fi
 }
 
@@ -527,9 +527,9 @@ enable_sing-box() {
 disable_sing-box() {
     systemctl disable sing-box
     if [[ $? == 0 ]]; then
-        LOGI "取消sing-box开机自启成功"
+        LOGI "Cancel the sing-box boot-up auto-start successfully"
     else
-        LOGE "取消sing-box开机自启失败"
+        LOGE "Failed to cancel the sing-box startup"
     fi
 }
 
@@ -539,13 +539,13 @@ show_log() {
     if [[ $? == ${SING_BOX_STATUS_NOT_RUNNING} ]]; then
         journalctl -u sing-box.service -e --no-pager -f
     else
-        confirm "确认是否已在配置中开启日志记录,默认开启" "y"
+        confirm "确认是否已在配置中开启日志记录,default开启" "y"
         if [[ $? -ne 0 ]]; then
             LOGI "将从console中读取日志:"
             journalctl -u sing-box.service -e --no-pager -f
         else
             local tempLog=''
-            read -p "将从日志文件中读取日志,请输入日志文件路径,直接回车将使用默认路径": tempLog
+            read -p "将从日志文件中读取日志,请输入日志文件路径,直接回车将使用default路径": tempLog
             if [[ -n ${tempLog} ]]; then
                 LOGI "日志文件路径:${tempLog}"
                 if [[ -f ${tempLog} ]]; then
@@ -569,7 +569,7 @@ clear_log() {
     else
         read -p "请输入日志文件路径": filePath
         if [[ ! -n ${filePath} ]]; then
-            LOGI "输入的日志文件路径无效,将使用默认的文件路径"
+            LOGI "输入的日志文件路径无效,将使用default的文件路径"
             filePath=${DEFAULT_LOG_FILE_SAVE_PATH}
         fi
     fi
@@ -641,7 +641,7 @@ ssl_cert_issue() {
 
 #show help
 show_help() {
-    echo "sing-box-v${SING_BOX_YES_VERSION} 管理脚本使用方法: "
+    echo "sing-box-v${SING_BOX_VERSION} 管理脚本使用方法: "
     echo "------------------------------------------"
     echo "sing-box              - 显示快捷菜单 (功能更多)"
     echo "sing-box start        - 启动 sing-box服务"
@@ -661,7 +661,7 @@ show_help() {
 #show menu
 show_menu() {
     echo -e "
-  ${green}sing-box-v${SING_BOX_YES_VERSION} 管理脚本${plain}
+  ${green}sing-box-v${SING_BOX_VERSION} 管理脚本${plain}
   ${green}0.${plain} 退出脚本
 ————————————————
   ${green}1.${plain} 安装 sing-box 服务
