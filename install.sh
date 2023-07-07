@@ -429,7 +429,7 @@ install_systemd_service() {
         rm -rf ${SERVICE_FILE_PATH}
     fi
     #create service file
-    mkdir -p ${SERVICE_FILE_PATH} && touch ${SERVICE_FILE_PATH}
+    mkdir -p ${SERVICE_FILE_PATH} && touch ${SERVICE_FILE_PATH}/sing-box.service
     if [ $? -ne 0 ]; then
         LOGE "create service file failed,exit"
         exit 1
