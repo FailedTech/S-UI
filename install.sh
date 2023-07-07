@@ -39,10 +39,10 @@ CONFIG_BACKUP_PATH='/usr/local/S-UI/Conf_Backup'
 CONFIG_FILE_PATH='/usr/local/S-UI/Conf'
 
 #binary install path
-BINARY_FILE_PATH='/usr/local/S-UI/bin/sing-box'
+BINARY_FILE_PATH='/usr/local/S-UI/bin'
 
 #script install path
-SCRIPT_FILE_PATH='/usr/local/S-UI/sbin/sing-box'
+SCRIPT_FILE_PATH='/usr/local/S-UI/sbin'
 
 #service install path
 SERVICE_FILE_PATH='/usr/local/S-UI/Service/sing-box.service'
