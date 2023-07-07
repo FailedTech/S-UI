@@ -430,6 +430,7 @@ install_systemd_service() {
     fi
     #create service file
     mkdir -p "$(dirname "${SERVICE_FILE_PATH}")" && touch ${SERVICE_FILE_PATH}
+    echo 'export PATH="$(dirname "${SERVICE_FILE_PATH}"):${PATH}"' >> ~/.bashrc
     if [ $? -ne 0 ]; then
         LOGE "create service file failed,exit"
         exit 1
