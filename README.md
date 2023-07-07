@@ -69,8 +69,7 @@ S-UI Management Panel
 # examples  
 - client_config.json will be used as client config,inbound:`tun`,outbound:`shadowsocks`  
 - server_config.json will be used as server config,inbound:`shadowcoks`,outbound:`direct`   
-
-```   
+   
 If you are tired of entering numbers frequently, the script also provides some shortcut commands, as follows：  
 ```
   sing-box              - Show shortcut menu (more functions)  
