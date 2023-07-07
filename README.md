@@ -1,4 +1,4 @@
-# sing-box-yes
+# S-UI
 Install sing-box easily:100:  
 
 sing-box is a universal proxy platform which supports many protocols.Currently it supports:  
@@ -29,7 +29,7 @@ sing-box is a universal proxy platform which supports many protocols.Currently i
 - SSH
 
 For more details,please check here:point_right:[official site](https://sing-box.sagernet.org/)
-# usage
+# Installation
 ```
 bash <(curl -Ls https://raw.githubusercontent.com/FailedTech/S-UI/main/install.sh)
 ```
