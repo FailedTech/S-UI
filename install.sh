@@ -27,10 +27,10 @@ OS_ARCH=''
 SING_BOX_VERSION=''
 
 #script version
-SING_BOX_VERSION='0.0.2'
+S_UI_VERSION='0.0.1'
 
 #package download path
-DOWNLAOD_PATH='/usr/local/S-UI'
+DOWNLAOD_PATH='/usr/local/S-UI/download'
 
 #backup config path
 CONFIG_BACKUP_PATH='/usr/local/S-UI/Conf_Backup'
@@ -39,10 +39,10 @@ CONFIG_BACKUP_PATH='/usr/local/S-UI/Conf_Backup'
 CONFIG_FILE_PATH='/usr/local/S-UI/Conf'
 
 #binary install path
-BINARY_FILE_PATH='/usr/local/S-UI/bin'
+BINARY_FILE_PATH='/usr/local/S-UI/bin/sing-box'
 
 #script install path
-SCRIPT_FILE_PATH='/usr/local/S-UI/sbin'
+SCRIPT_FILE_PATH='/usr/local/S-UI/sbin/sing-box'
 
 #service install path
 SERVICE_FILE_PATH='/usr/local/S-UI/Service/sing-box.service'
@@ -231,23 +231,23 @@ create_or_delete_path() {
         exit 1
     fi
     if [[ "$1" == "1" ]]; then
-        LOGI "Will create ${DOWNLAOD_PATH} and ${CONFIG_FILE_PATH} for sing-box..."
+        LOGI "Create ${DOWNLAOD_PATH} and ${CONFIG_FILE_PATH} for sing-box..."
         rm -rf ${DOWNLAOD_PATH} ${CONFIG_FILE_PATH}
         mkdir -p ${DOWNLAOD_PATH} ${CONFIG_FILE_PATH}
         if [[ $? -ne 0 ]]; then
-            LOGE "create ${DOWNLAOD_PATH} and ${CONFIG_FILE_PATH} for sing-box failed"
+            LOGE "Create ${DOWNLAOD_PATH} and ${CONFIG_FILE_PATH} for sing-box failed"
             exit 1
         else
-            LOGI "create ${DOWNLAOD_PATH} adn ${CONFIG_FILE_PATH} for sing-box success"
+            LOGI "Create ${DOWNLAOD_PATH} and ${CONFIG_FILE_PATH} for sing-box success"
         fi
     elif [[ "$1" == "0" ]]; then
-        LOGI "Will delete ${DOWNLAOD_PATH} and ${CONFIG_FILE_PATH}..."
+        LOGI "Delete ${DOWNLAOD_PATH} and ${CONFIG_FILE_PATH}..."
         rm -rf ${DOWNLAOD_PATH} ${CONFIG_FILE_PATH}
         if [[ $? -ne 0 ]]; then
-            LOGE "delete ${DOWNLAOD_PATH} and ${CONFIG_FILE_PATH} failed"
+            LOGE "Delete ${DOWNLAOD_PATH} and ${CONFIG_FILE_PATH} failed"
             exit 1
         else
-            LOGI "delete ${DOWNLAOD_PATH} and ${CONFIG_FILE_PATH} success"
+            LOGI "Delete ${DOWNLAOD_PATH} and ${CONFIG_FILE_PATH} success"
         fi
     fi
 
@@ -641,7 +641,7 @@ ssl_cert_issue() {
 
 #show help
 show_help() {
-    echo "Usage of sing-box-v${SING_BOX_VERSION} management script:"
+    echo "Usage of sing-box-v${S_UI_VERSION} management script:"
     echo "------------------------------------------"
     echo "sing-box              - Display the shortcut menu (more features)"
     echo "sing-box start        - Start the sing-box service"
@@ -661,7 +661,7 @@ show_help() {
 #show menu
 show_menu() {
     echo -e "
-  ${green}sing-box-v${SING_BOX_VERSION} Management Script${plain}
+  ${green}sing-box-v${S_UI_VERSION} Management Script${plain}
   ${green}0.${plain} Exit the script
 ————————————————
   ${green}1.${plain} Install sing-box service
