@@ -537,6 +537,26 @@ disable_sing-box() {
     fi
 }
 
+#Generate UUID
+generate_uuid(){
+${BINARY_FILE_PATH} generate uuid
+}
+
+#Generate Keypair
+generate_keypair(){
+${BINARY_FILE_PATH} generate reality-keypair
+}
+
+#Generate Shortid
+generate_shortid(){
+${BINARY_FILE_PATH} generate rand --hex 8
+}
+
+#Edit Config
+edit_config(){
+nano ${CONFIG_FILE_PATH}/config.json
+}
+
 #show logs
 show_log() {
     status_check
@@ -621,7 +641,7 @@ enable_auto_clear_log() {
     LOGI "Successfully set up scheduled log clearing for sing-box (${filePath})"
 }
 
-#disable auto dlete log
+#disable auto delete log
 disable_auto_clear_log() {
     crontab -l | grep -v "sing-box clear" | crontab -
     if [[ $? -ne 0 ]]; then
@@ -681,18 +701,22 @@ show_menu() {
   ${green}8.${plain} View sing-box logs
   ${green}9.${plain} Clear sing-box logs
   ${pink}>>>>>>>>>> Config <<<<<<<<<<${plain}
-  ${green}10.${plain} Check sing-box configuration
+  ${green}10.${plain} Generate UUID
+  ${green}11.${plain} Generate Keypair
+  ${green}12.${plain} Generate Shortid
+  ${green}13.${plain} Edit Config
+  ${green}14.${plain} Check sing-box configuration
   ${pink}>>>>>>>>>> Boot <<<<<<<<<<${plain}
-  ${green}11.${plain} Set sing-box to start on boot
-  ${green}12.${plain} Disable sing-box from starting on boot
-  ${green}13.${plain} Set up scheduled log clearing and restart
-  ${green}14.${plain} Disable scheduled log clearing and restart
+  ${green}15.${plain} Set sing-box to start on boot
+  ${green}16.${plain} Disable sing-box from starting on boot
+  ${green}17.${plain} Set up scheduled log clearing and restart
+  ${green}18.${plain} Disable scheduled log clearing and restart
   ${pink}>>>>>>>>>> Others <<<<<<<<<<${plain}
-  ${green}15.${plain} Enable BBR (one-click)
-  ${green}16.${plain} Apply SSL certificate (one-click)
+  ${green}19.${plain} Enable BBR (one-click)
+  ${green}20.${plain} Apply SSL certificate (one-click)
  "
     show_status
-    echo && read -p "Please enter your choice [0-16]: " num
+    echo && read -p "Please enter your choice [0-20]: " num
 
     case "${num}" in
     0)
@@ -726,28 +750,40 @@ show_menu() {
         clear_log && show_menu
         ;;
     10)
-        config_check && show_menu
+        generate_uuid && show_menu
         ;;
-    11)
-        enable_sing-box && show_menu
+    11) 
+        generate_keypair && show_menu
         ;;
-    12)
-        disable_sing-box && show_menu
+    12) 
+        generate_shortid && show_menu
         ;;
-    13)
-        enable_auto_clear_log
+    13) 
+        edit_config && show_menu
         ;;
     14)
-        disable_auto_clear_log
+        config_check && show_menu
         ;;
     15)
-        enable_bbr && show_menu
+        enable_sing-box && show_menu
         ;;
     16)
+        disable_sing-box && show_menu
+        ;;
+    17)
+        enable_auto_clear_log
+        ;;
+    18)
+        disable_auto_clear_log
+        ;;
+    19)
+        enable_bbr && show_menu
+        ;;
+    20)
         ssl_cert_issue
         ;;
     *)
-        LOGE "Please enter a valid option [0-16]"
+        LOGE "Please enter a valid option [0-20]"
         ;;
     esac
 }
