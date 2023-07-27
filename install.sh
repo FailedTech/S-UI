@@ -677,18 +677,18 @@ show_menu() {
   ${green}7.${plain} View sing-box status
   ${green}8.${plain} View sing-box logs
   ${green}9.${plain} Clear sing-box logs
-  ${green}A.${plain} Check sing-box configuration
+  ${green}10.${plain} Check sing-box configuration
 ————————————————
-  ${green}B.${plain} Set sing-box to start on boot
-  ${green}C.${plain} Disable sing-box from starting on boot
-  ${green}D.${plain} Set up scheduled log clearing and restart
-  ${green}E.${plain} Disable scheduled log clearing and restart
+  ${green}11.${plain} Set sing-box to start on boot
+  ${green}12.${plain} Disable sing-box from starting on boot
+  ${green}13.${plain} Set up scheduled log clearing and restart
+  ${green}14.${plain} Disable scheduled log clearing and restart
 ————————————————
-  ${green}F.${plain} Enable BBR (one-click)
-  ${green}G.${plain} Apply SSL certificate (one-click)
+  ${green}15.${plain} Enable BBR (one-click)
+  ${green}16.${plain} Apply SSL certificate (one-click)
  "
     show_status
-    echo && read -p "Please enter your choice [0-G]: " num
+    echo && read -p "Please enter your choice [0-16]: " num
 
     case "${num}" in
     0)
@@ -721,29 +721,29 @@ show_menu() {
     9)
         clear_log && show_menu
         ;;
-    A)
+    10)
         config_check && show_menu
         ;;
-    B)
+    11)
         enable_sing-box && show_menu
         ;;
-    C)
+    12)
         disable_sing-box && show_menu
         ;;
-    D)
+    13)
         enable_auto_clear_log
         ;;
-    E)
+    14)
         disable_auto_clear_log
         ;;
-    F)
+    15)
         enable_bbr && show_menu
         ;;
-    G)
+    16)
         ssl_cert_issue
         ;;
     *)
-        LOGE "Please enter a valid option [0-G]"
+        LOGE "Please enter a valid option [0-16]"
         ;;
     esac
 }
