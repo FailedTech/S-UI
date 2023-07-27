@@ -665,7 +665,7 @@ show_help() {
 #show menu
 show_menu() {
     echo -e "
-  ${pink}S-UI-v${S_UI_VERSION} Management Script${plain}
+  ${green}S-UI-v${S_UI_VERSION} Management Script${plain}
   ${pink}>>>>>>>>>> Exit$ <<<<<<<<<<{plain}
   ${green}0.${plain} Exit the script
   ${pink}>>>>>>>>>> Core <<<<<<<<<<${plain}
