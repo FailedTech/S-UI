@@ -445,12 +445,15 @@ After=network.target nss-lookup.target
 Wants=network.target
 [Service]
 Type=simple
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE CAP_NET_RAW
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE CAP_NET_RAW
 ExecStart=${BINARY_FILE_PATH} run -c ${CONFIG_FILE_PATH}/config.json
+ExecReload=/bin/kill -HUP $MAINPID
 Restart=on-failure
-RestartSec=30s
+RestartSec=10
 RestartPreventExitStatus=23
 LimitNPROC=10000
-LimitNOFILE=1000000
+LimitNOFILE=1infinity
 [Install]
 WantedBy=multi-user.target
 EOF
