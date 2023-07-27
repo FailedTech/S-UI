@@ -36,35 +36,44 @@ bash <(curl -Ls https://raw.githubusercontent.com/FailedTech/S-UI/main/install.s
 # quick start
 Just type `sing-box` to enter control menu,as follows showed here:
 ```
-S-UI Management Panel
-  0. Exit script
+
+  S-UI-v0.0.1 Management Script
+  0. Exit the script
 ————————————————
-  1. Install
-  2. Update
-  3. Uninstall
-  4. Start
-  5. Stop
-  6. Restart
-  7. View status
-  8. View logs
-  9. Check configuration
+  1. Install sing-box service
+  2. Update sing-box service
+  3. Uninstall sing-box service
+  4. Start sing-box service
+  5. Stop sing-box service
+  6. Restart sing-box service
+  7. View sing-box status
+  8. View sing-box logs
+  9. Clear sing-box logs
+  10. Check sing-box configuration
 ————————————————
-  A. Auto-start at boot
-  B. Disable auto-start at boot
+  11. Set sing-box to start on boot
+  12. Disable sing-box from starting on boot
+  13. Set up scheduled log clearing and restart
+  14. Disable scheduled log clearing and restart
 ————————————————
-  C. Install bbr 
-  D. Get SSL certificate
+  15. Enable BBR (one-click)
+  16. Apply SSL certificate (one-click)
  
-[INF] Version Information:sing-box 1.0.4.d2add33 (go1.19.1, linux/amd64, CGO disabled) 
-[INF] sing-box status: running
-[INF] sing-box starts automatically: Yes
+[INF] Version Information: sing-box version 1.3.4
+
+Environment: go1.20.6 linux/amd64
+Tags: with_gvisor,with_quic,with_dhcp,with_wireguard,with_utls,with_reality_server,with_clash_api
+Revision: 9f92ec4ee7f2873035d2b34c260d67fc5b302af4
+CGO: disabled 
+[INF] sing-box state: Running
+[INF] sing-box start automatically: Yes
 [INF] ##################### 
-[INF] Process ID:2615900 
-[INF] Run Time：Thu 2022-09-15 16:29:14 CST; 1s ago  
-[INF] Memory Usage: 11488 kB 
+[INF] Process ID: 20524 
+[INF] Run Time：Thu 2023-07-27 20:13:13 UTC; 2min 40s ago  
+[INF] Memory Usage: 22772 kB 
 [INF] ##################### 
 [INF] Configuration file path:/usr/local/S-UI/Conf/config.json 
-[INF] Executable path:/usr/local/S-UI/bin/sing-box 
+[INF] Executable path:/usr/local/bin/sing-box
 ```   
 # examples  
 - client_config.json will be used as client config,inbound:`tun`,outbound:`shadowsocks`  
