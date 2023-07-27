@@ -666,7 +666,7 @@ show_help() {
 show_menu() {
     echo -e "
   ${green}S-UI-v${S_UI_VERSION} Management Script${plain}
-  ${pink}>>>>>>>>>> Exit$ <<<<<<<<<<{plain}
+  ${pink}>>>>>>>>>> Exit$ <<<<<<<<<<${plain}
   ${green}0.${plain} Exit the script
   ${pink}>>>>>>>>>> Core <<<<<<<<<<${plain}
   ${green}1.${plain} Install sing-box core
