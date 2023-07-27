@@ -29,11 +29,11 @@
       ],
       "tls": {
         "enabled": true,
-        "server_name": "www.jetbrains.com",
+        "server_name": "jetbrains.com",
         "reality": {
           "enabled": true,
           "handshake": {
-            "server": "www.jetbrains.com",
+            "server": "jetbrains.com",
             "server_port": 443
           },
           "private_key": "iLYHvCMlb22F7HRbUwqmb9cRrbPs0iYjNxx7J8VDPG4",
