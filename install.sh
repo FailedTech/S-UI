@@ -12,8 +12,8 @@
 #Some basic definitions
 plain='\033[0m'
 red='\033[0;31m'
-blue='\033[1;34m'
-pink='\033[1;35m'
+blue='\033[0;34m' 
+pink='\033[0;35m'
 green='\033[0;32m'
 yellow='\033[0;33m'
 
@@ -665,29 +665,29 @@ show_help() {
 #show menu
 show_menu() {
     echo -e "
-  ${blue}S-UI-v${S_UI_VERSION} Management Script${plain}
-  >>>>>>>>>> ${blue}Exit${plain} <<<<<<<<<<
+  ${pink}S-UI-v${S_UI_VERSION} Management Script${plain}
+  ${pink}>>>>>>>>>> Exit$ <<<<<<<<<<{plain}
   ${green}0.${plain} Exit the script
-  ${blue}>>>>>>>>>> Core <<<<<<<<<<${plain}
+  ${pink}>>>>>>>>>> Core <<<<<<<<<<${plain}
   ${green}1.${plain} Install sing-box core
   ${green}2.${plain} Update sing-box core
   ${green}3.${plain} Uninstall sing-box core
-  ${blue}>>>>>>>>>> Service <<<<<<<<<<${plain}
+  ${pink}>>>>>>>>>> Service <<<<<<<<<<${plain}
   ${green}4.${plain} Start sing-box service
   ${green}5.${plain} Stop sing-box service
   ${green}6.${plain} Restart sing-box service
   ${green}7.${plain} View sing-box status
-  ${blue}>>>>>>>>>> Log <<<<<<<<<<${plain}
+  ${pink}>>>>>>>>>> Log <<<<<<<<<<${plain}
   ${green}8.${plain} View sing-box logs
   ${green}9.${plain} Clear sing-box logs
-  ${blue}>>>>>>>>>> Config <<<<<<<<<<${plain}
+  ${pink}>>>>>>>>>> Config <<<<<<<<<<${plain}
   ${green}10.${plain} Check sing-box configuration
-  ${blue}>>>>>>>>>> Boot <<<<<<<<<<${plain}
+  ${pink}>>>>>>>>>> Boot <<<<<<<<<<${plain}
   ${green}11.${plain} Set sing-box to start on boot
   ${green}12.${plain} Disable sing-box from starting on boot
   ${green}13.${plain} Set up scheduled log clearing and restart
   ${green}14.${plain} Disable scheduled log clearing and restart
-  ${blue}>>>>>>>>>> Others <<<<<<<<<<${plain}
+  ${pink}>>>>>>>>>> Others <<<<<<<<<<${plain}
   ${green}15.${plain} Enable BBR (one-click)
   ${green}16.${plain} Apply SSL certificate (one-click)
  "
