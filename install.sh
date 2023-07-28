@@ -453,7 +453,7 @@ Restart=on-failure
 RestartSec=10
 RestartPreventExitStatus=23
 LimitNPROC=10000
-LimitNOFILE=1infinity
+LimitNOFILE=infinity
 [Install]
 WantedBy=multi-user.target
 EOF
