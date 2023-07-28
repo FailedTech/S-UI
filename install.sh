@@ -539,7 +539,7 @@ disable_sing-box() {
 
 #Generate UUID
 generate_uuid() {
-    echo "${red}UUID:${plain}\n${pink}$(${BINARY_FILE_PATH} generate uuid)${plain}"
+    echo -e "${red}UUID:${plain}\n${pink}$(${BINARY_FILE_PATH} generate uuid)${plain}"
 }
 
 #Generate Keypair
