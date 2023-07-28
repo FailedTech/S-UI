@@ -771,9 +771,9 @@ show_menu() {
     13)
         clear
         generate_uuid
-        echo -e "\n"
+        echo -e " \n "
         generate_keypair
-        echo -e "\n"
+        echo -e " \n "
         generate_shortid
         read
         show_menu
