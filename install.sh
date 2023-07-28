@@ -539,22 +539,28 @@ disable_sing-box() {
 
 #Generate UUID
 generate_uuid() {
+    clear
     echo -e "${red}UUID:${plain}\n${pink}$(${BINARY_FILE_PATH} generate uuid)${plain}"
+    read
 }
 
 #Generate Keypair
 generate_keypair(){
+    clear
     echo -e "${red}Reality Keypair:${plain}\n${pink}$(${BINARY_FILE_PATH} generate reality-keypair)${plain}"
+    read
 }
 
 #Generate Shortid
 generate_shortid(){
+    clear
     echo -e "${red}ShortID:${plain}\n${pink}$(${BINARY_FILE_PATH} generate rand --hex 8)${plain}"
+    read
 }
 
 #Edit Config
 edit_config(){
-nano ${CONFIG_FILE_PATH}/config.json
+    nano ${CONFIG_FILE_PATH}/config.json
 }
 
 #show logs
