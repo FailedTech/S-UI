@@ -539,23 +539,17 @@ disable_sing-box() {
 
 #Generate UUID
 generate_uuid() {
-    clear
     echo -e "${red}UUID:${plain}\n${pink}$(${BINARY_FILE_PATH} generate uuid)${plain}"
-    read
 }
 
 #Generate Keypair
 generate_keypair(){
-    clear
     echo -e "${red}Reality Keypair:${plain}\n${pink}$(${BINARY_FILE_PATH} generate reality-keypair)${plain}"
-    read
 }
 
 #Generate Shortid
 generate_shortid(){
-    clear
     echo -e "${red}ShortID:${plain}\n${pink}$(${BINARY_FILE_PATH} generate rand --hex 8)${plain}"
-    read
 }
 
 #Edit Config
@@ -710,19 +704,20 @@ show_menu() {
   ${green}10.${plain} Generate UUID
   ${green}11.${plain} Generate Keypair
   ${green}12.${plain} Generate Shortid
-  ${green}13.${plain} Edit Config
-  ${green}14.${plain} Check sing-box configuration
+  ${green}13.${plain} Generate AIO
+  ${green}14.${plain} Edit Config
+  ${green}15.${plain} Check sing-box configuration
   ${pink}>>>>>>>>>> Boot <<<<<<<<<<${plain}
-  ${green}15.${plain} Set sing-box to start on boot
-  ${green}16.${plain} Disable sing-box from starting on boot
-  ${green}17.${plain} Set up scheduled log clearing and restart
-  ${green}18.${plain} Disable scheduled log clearing and restart
+  ${green}16.${plain} Set sing-box to start on boot
+  ${green}17.${plain} Disable sing-box from starting on boot
+  ${green}18.${plain} Set up scheduled log clearing and restart
+  ${green}19.${plain} Disable scheduled log clearing and restart
   ${pink}>>>>>>>>>> Others <<<<<<<<<<${plain}
-  ${green}19.${plain} Enable BBR (one-click)
-  ${green}20.${plain} Apply SSL certificate (one-click)
+  ${green}20.${plain} Enable BBR (one-click)
+  ${green}21.${plain} Apply SSL certificate (one-click)
  "
     show_status
-    echo && read -p "Please enter your choice [0-20]: " num
+    echo && read -p "Please enter your choice [0-21]: " num
 
     case "${num}" in
     0)
@@ -756,40 +751,56 @@ show_menu() {
         clear_log && show_menu
         ;;
     10)
-        generate_uuid && show_menu
+        clear
+        generate_uuid 
+        read
+        show_menu
         ;;
     11) 
-        generate_keypair && show_menu
+        clear
+        generate_keypair
+        read
+        show_menu
         ;;
     12) 
-        generate_shortid && show_menu
+        clear
+        generate_shortid
+        read
+        show_menu
         ;;
-    13) 
+    13)
+        clear
+        generate_uuid
+        generate_keypair
+        generate_shortid
+        read
+        ;;
+    14) 
         edit_config && show_menu
         ;;
-    14)
+    15)
         config_check && show_menu
         ;;
-    15)
+    16)
         enable_sing-box && show_menu
         ;;
-    16)
+    17)
         disable_sing-box && show_menu
         ;;
-    17)
+    18)
         enable_auto_clear_log
         ;;
-    18)
+    19)
         disable_auto_clear_log
         ;;
-    19)
+    20)
         enable_bbr && show_menu
         ;;
-    20)
+    21)
         ssl_cert_issue
         ;;
     *)
-        LOGE "Please enter a valid option [0-20]" && show_menu
+        LOGE "Please enter a valid option [0-21]" && show_menu
         ;;
     esac
 }
