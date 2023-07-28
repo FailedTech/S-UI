@@ -782,7 +782,10 @@ show_menu() {
         edit_config && show_menu
         ;;
     15)
-        config_check && show_menu
+        clear
+        config_check
+        read
+        show_menu
         ;;
     16)
         enable_sing-box && show_menu
