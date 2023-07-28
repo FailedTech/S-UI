@@ -774,6 +774,7 @@ show_menu() {
         generate_keypair
         generate_shortid
         read
+        show_menu
         ;;
     14) 
         edit_config && show_menu
