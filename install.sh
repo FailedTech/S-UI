@@ -783,7 +783,7 @@ show_menu() {
         ssl_cert_issue
         ;;
     *)
-        LOGE "Please enter a valid option [0-20]"
+        LOGE "Please enter a valid option [0-20]" && show_menu
         ;;
     esac
 }
